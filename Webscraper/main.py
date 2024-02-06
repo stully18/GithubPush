@@ -7,7 +7,7 @@ windll.shcore.SetProcessDpiAwareness(1)
 window = Tk()
 
 # Use raw string literals or escape backslashes to avoid SyntaxWarning
-theme_file_path = r"C:\Users\jabbe\PycharmProjects\GithubPush\Webscraper\ttkThemes\azure.tcl"
+theme_file_path = r"\ttkThemes\azure.tcl"
 
 # Load the custom theme file
 try:
