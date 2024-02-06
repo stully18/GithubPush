@@ -8,16 +8,16 @@ windll.shcore.SetProcessDpiAwareness(1)
 
 def runCode():
     code = text.get('1.0',END)
-    executedCode = exec(code)
+    exec(code)
 
 window = Tk()
 window.geometry('1500x810')
 window.config(bg='#5c5c5c')
 
-open_img = PhotoImage(file="C:\PythonImages\IDE\open.png")
-save_img = PhotoImage(file="C:\PythonImages\IDE\save.png")
-run_img = PhotoImage(file="C:\PythonImages\IDE\\run.png")
-text = Text(font=("Consolas",25),width=60,height=21,bg="#3d3d3d",fg="#dbdbdb",borderwidth=0)
+open_img = PhotoImage(file="C:\\PythonImages\\IDE\\open.png")
+save_img = PhotoImage(file="C:\\PythonImages\\IDE\\save.png")
+run_img = PhotoImage(file="C:\\PythonImages\\IDE\\run.png")
+text = Text(font=("Consolas",20),width=60,height=21,bg="#3d3d3d",fg="#dbdbdb",borderwidth=0)
 text.grid(row=0,column=1,columnspan=2,rowspan=3)
 open_btn = Button(image=open_img,bg='#5c5c5c',relief="flat",activebackground='#5c5c5c')
 open_btn.grid(row=0,column=0)
