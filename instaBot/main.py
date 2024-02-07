@@ -1,18 +1,33 @@
 from time import sleep
 from selenium import webdriver
 
+
 browser = webdriver.Firefox()
 browser.implicitly_wait(5)
 
-browser.get('https://www.instagram.com/')
 
-sleep(2)
+class LoginPage:
+    def __init__(self,browser):
+        self.browser = browser
+    def login(self):
+        username_input = browser.find_element(by="xpath", value="input[name='username']")
+        username_input.send_keys("mofot70899@namewok.com")
+        password_input = browser.find_element(by="xpath", value="input[name='password']")
+        password_input.send_keys("easypie1234")
+        login_btn = browser.find_element(by="xpath", value="//button[@type='submit']")
+        login_btn.click()
+        sleep(5)
 
-username_input = browser.find_element(by="xpath", value="/html/body/div[2]/div/div/div[2]/div/div/div[1]/section/main/article/div[2]/div[1]/div[2]/form/div/div[1]/div/label/input")
-username_input.send_keys("mofot70899@namewok.com")
-password_input = browser.find_element(by="xpath", value="/html/body/div[2]/div/div/div[2]/div/div/div[1]/section/main/article/div[2]/div[1]/div[2]/form/div/div[2]/div/label/input")
-password_input.send_keys("easypie1234")
-login_btn = browser.find_element(by="xpath", value="/html/body/div[2]/div/div/div[2]/div/div/div[1]/section/main/article/div[2]/div[1]/div[2]/form/div/div[3]/button")
-login_btn.click()
-sleep(5)
-browser.close()
+class HomePage:
+    def __init__(self,browser):
+        self.browser = browser
+        self.browser.get('https://www.instagram.com/')
+    def go_to_login_page(self):
+        self.browser.find_element(type="xpath", value="//a[text()='Log in']").click()
+        sleep(2)
+        return LoginPage(self.browser)
+
+home_page = HomePage(browser)
+login_page = home_page.go_to_login_page()
+login_page.login()
+
