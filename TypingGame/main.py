@@ -24,8 +24,8 @@ def submit(event):
     typingTime = round(time.time()-startTime,2)
     timeWpm.config(text=f"Your time was {typingTime} seconds and your accuracy was {accuracy}%")
 def calculate_accuracy(user_input, sentence):
-    user_words = user_input.strip().split()  # Split user input into words
-    sentence_words = sentence.strip().split()  # Split sentence into words
+    user_words = user_input.strip().split()
+    sentence_words = sentence.strip().split()
     correct_words = [uw == sw for uw, sw in zip(user_words, sentence_words)]  # Compare each word
     accuracy = sum(correct_words) / len(sentence_words)  # Calculate accuracy
     return accuracy
