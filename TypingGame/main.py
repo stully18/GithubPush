@@ -91,7 +91,7 @@ practiceSentence = Message(
 practiceSentence.grid(row=0, column=0)
 
 userEntry = CTkTextbox(master=window,
-    font=('Consolas', 15),
+    font=('Consolas', 20),
     width=500,
     height=100,
     state="disabled",
@@ -127,7 +127,7 @@ newSentenceBtn = CTkButton(master=window,
                            corner_radius=20,
                            fg_color="#937ccc",
                            hover_color="#c3acfa",
-                           border_color=BG_COLOR,  # Set border color to match the background
+                           border_color=BG_COLOR,
                            border_width=2,
                            width=150,
                            height=30)
