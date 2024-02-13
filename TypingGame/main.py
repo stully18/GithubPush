@@ -1,6 +1,8 @@
 import time
 import random
 from tkinter import *
+
+import customtkinter
 from customtkinter import *
 from sampleSentences import sentences
 from ctypes import windll
@@ -62,36 +64,51 @@ def newSentence():
     userEntry.delete(1.0,END)
     startTime = time.time()
 
-window = CTk()
+window = customtkinter.CTk()
 window.geometry("750x400")
 window.title('Typing Test')
 window.resizable(False, False)
 window.bind("<space>", start)
 
 
-background_image = Image.open(png_path)
-background_image = ImageTk.PhotoImage(background_image)
 
-background_label = Label(window, image=background_image)
+
+background_image = customtkinter.CTkImage(light_image=Image.open(png_path),
+                                  dark_image=Image.open(png_path),
+                                          size=(750,400))
+img = Image.open(png_path)
+uppercroppedPng = img.crop((0,100,250,300))
+lowercroppedPng = img.crop((0,300,550,500))
+upperlabel_image = customtkinter.CTkImage(light_image=uppercroppedPng,
+                                  dark_image=uppercroppedPng,
+                                          size=(550,100))
+
+lowerlabel_image = customtkinter.CTkImage(light_image=lowercroppedPng,
+                                  dark_image=lowercroppedPng,
+                                          size=(550,100))
+buttonImage = customtkinter.CTkImage(light_image=lowercroppedPng,
+                                  dark_image=lowercroppedPng,
+                                          size=(150,30))
+
+background_label = CTkLabel(master=window, image=background_image,text="")
 background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-menubar = Menu(window)
-window.configure(menu=menubar)
-colorMenu = Menu(menubar, tearoff=0)
-menubar.add_cascade(label="Color Changer", menu=colorMenu)
-colorMenu.add_command(label="apple")
 
-practiceSentence = Message(
-    font=('Consolas', 15),
-    bg=BG_COLOR,
-    fg=FG_COLOR,
-    width=700,
-    text="Welcome to this typing test! Press spacebar to get started and the enter key when you are finished with the sentence"
+practiceSentence = CTkLabel(
+    master=window,
+    font=('Consolas', 20),
+    bg_color="transparent",
+    compound="center",
+    image=upperlabel_image,
+    fg_color="transparent",
+    width=550,
+    height=100,
+    text="Welcome to this typing test!\nPress spacebar to get started and the enter key\nwhen you are finished with the sentence"
 )
 practiceSentence.grid(row=0, column=0)
 
 userEntry = CTkTextbox(master=window,
-    font=('Consolas', 20),
+    font=('Consolas', 15),
     width=500,
     height=100,
     state="disabled",
@@ -101,21 +118,25 @@ userEntry = CTkTextbox(master=window,
 )
 userEntry.grid(row=1, column=0)
 
-timeWpm = Message(font=('Consolas', 15),
-                  width=700,
-                  bg=BG_COLOR,  # Set background to match window background
-                  fg=FG_COLOR)
+timeWpm = CTkLabel(master=window,
+                   font=('Consolas', 15),
+                   width=200,
+                   bg_color="transparent",
+                   fg_color="transparent",
+                   text="",
+                   compound="center",
+                   image=lowerlabel_image
+                   )
 timeWpm.grid(row=3, column=0)
 
 submitBtn = CTkButton(master=window,
                       text="Submit",
                       command=submit,
                       font=('Consolas', 18),
-                      corner_radius=20,
                       fg_color="#937ccc",
                       hover_color="#c3acfa",
-                      border_color=BG_COLOR,  # Set border color to match the background
-                      border_width=2,
+                      border_color="#737373",  # Set border color to match the background
+                      border_width=3,
                       width=150,
                       height=30)
 submitBtn.grid(row=2, column=0)
@@ -124,11 +145,10 @@ newSentenceBtn = CTkButton(master=window,
                            text="New Sentence",
                            command=newSentence,
                            font=('Consolas', 18),
-                           corner_radius=20,
                            fg_color="#937ccc",
                            hover_color="#c3acfa",
-                           border_color=BG_COLOR,
-                           border_width=2,
+                           border_color="#737373",
+                           border_width=3,
                            width=150,
                            height=30)
 newSentenceBtn.grid(row=1, column=1)
