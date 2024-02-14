@@ -14,7 +14,8 @@ BG_COLOR = "#34245e"
 BG_COLOR_2 = "#655199"
 FG_COLOR = "white"
 COUNTDOWN_START = 4
-
+global wpm_list
+wpm_list = []
 count = COUNTDOWN_START
 sampleSentences = sentences()
 startTime = 0
@@ -30,12 +31,15 @@ def calculate_accuracy(user_input, sentence):
     return round(accuracy * 100), len(sentence_words)
 
 def submit():
-    global startTime, currentSentence
+    global startTime, currentSentence, wpm_list
     userInput = userEntry.get(1.0, END)
     accuracy, sentence_length = calculate_accuracy(userInput, currentSentence)
     typingTime = round(time.time() - (startTime+1), 2)
     wpm = round((sentence_length / typingTime) * 60)
+    wpm_list.append(wpm)
+    averageWpm = int(sum(wpm_list)/len(wpm_list))
     timeWpm.configure(text=f"Time: {typingTime} seconds\nAccuracy: {accuracy}%\nWPM: {wpm}")
+    averageWpmLbl.configure(text=f'average wpm: {averageWpm}')
 
 def start(event):
     global startTime, count
@@ -74,7 +78,7 @@ window.bind("<space>", start)
 
 
 background_image = customtkinter.CTkImage(light_image=Image.open(png_path),
-                                  dark_image=Image.open(png_path),
+                                          dark_image=Image.open(png_path),
                                           size=(750,400))
 img = Image.open(png_path)
 uppercroppedPng = img.crop((0,100,250,300))
@@ -87,8 +91,8 @@ lowerlabel_image = customtkinter.CTkImage(light_image=lowercroppedPng,
                                   dark_image=lowercroppedPng,
                                           size=(550,100))
 buttonImage = customtkinter.CTkImage(light_image=lowercroppedPng,
-                                  dark_image=lowercroppedPng,
-                                          size=(150,30))
+                                     dark_image=lowercroppedPng,
+                                     size=(150,30))
 
 background_label = CTkLabel(master=window, image=background_image,text="")
 background_label.place(x=0, y=0, relwidth=1, relheight=1)
@@ -98,6 +102,7 @@ practiceSentence = CTkLabel(
     master=window,
     font=('Consolas', 20),
     bg_color="transparent",
+    text_color="white",
     compound="center",
     image=upperlabel_image,
     fg_color="transparent",
@@ -118,9 +123,20 @@ userEntry = CTkTextbox(master=window,
 )
 userEntry.grid(row=1, column=0)
 
+averageWpmLbl = CTkLabel(master=window,
+                   font=('Consolas', 15),
+                   width=100,
+                   text_color="white",
+                   text="average wpm:",
+                   fg_color="#906bff",
+                   bg_color="black"
+                   )
+averageWpmLbl.grid(row=2, column=1)
+
 timeWpm = CTkLabel(master=window,
                    font=('Consolas', 15),
                    width=200,
+                   text_color="white",
                    bg_color="transparent",
                    fg_color="transparent",
                    text="",
@@ -131,21 +147,23 @@ timeWpm.grid(row=3, column=0)
 
 submitBtn = CTkButton(master=window,
                       text="Submit",
+                      corner_radius=0,
                       command=submit,
                       font=('Consolas', 18),
                       fg_color="#937ccc",
                       hover_color="#c3acfa",
-                      border_color="#737373",  # Set border color to match the background
+                      border_color="#737373",
                       border_width=3,
                       width=150,
                       height=30)
-submitBtn.grid(row=2, column=0)
+submitBtn.grid(row=2, column=0,pady=5)
 
 newSentenceBtn = CTkButton(master=window,
                            text="New Sentence",
                            command=newSentence,
                            font=('Consolas', 18),
                            fg_color="#937ccc",
+                           corner_radius=0,
                            hover_color="#c3acfa",
                            border_color="#737373",
                            border_width=3,
