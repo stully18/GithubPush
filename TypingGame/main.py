@@ -1,7 +1,5 @@
 import time
 import random
-from tkinter import *
-
 import customtkinter
 from customtkinter import *
 from sampleSentences import sentences
@@ -113,7 +111,7 @@ practiceSentence = CTkLabel(
 practiceSentence.grid(row=0, column=0)
 
 userEntry = CTkTextbox(master=window,
-    font=('Consolas', 15),
+    font=('Consolas', 20),
     width=500,
     height=100,
     state="disabled",
@@ -124,13 +122,13 @@ userEntry = CTkTextbox(master=window,
 userEntry.grid(row=1, column=0)
 
 averageWpmLbl = CTkLabel(master=window,
-                   font=('Consolas', 15),
-                   width=100,
-                   text_color="white",
-                   text="average wpm:",
-                   fg_color="#906bff",
-                   bg_color="black"
-                   )
+                         font=('Consolas', 18),
+                         width=100,
+                         text_color="white",
+                         text="average wpm:",
+                         fg_color="#937ccc",
+                         bg_color="black",
+                         )
 averageWpmLbl.grid(row=2, column=1)
 
 timeWpm = CTkLabel(master=window,
