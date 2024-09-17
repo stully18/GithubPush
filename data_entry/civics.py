@@ -11,15 +11,7 @@ def login(page):
     page.get_by_placeholder("Password").fill("Password1!")
     page.get_by_role("button", name="LOG IN").click()
 
-
 def createQuestion(page):
-    print_reference = input("Enter print reference\n")
-    difficulty_level = input("Enter difficulty level 1-5\n")
-    state_difficulty = input("State difficulty level (E,A,D)\n")
-    RBT = input("Enter RBT (Remember, Understand, Apply, Analyze, Create, Evaluate) \n")
-    BKD = input("Enter Blooms Knowledge Dimension (F,C,P,M)\n")
-    WDK = input("Enter Depth on knowledge level (1,2,3,4)\n")
-
     page.get_by_label("Content linkPress enter or").click()
     page.get_by_label("Question Search linkPress").click()
     page.get_by_title("Create Question").locator("span").click()
@@ -28,7 +20,24 @@ def createQuestion(page):
     page.locator("#gradeLevelId-input").select_option("7")
     page.locator("#masterSubjectId-input").select_option("19")
     page.get_by_text("Go").click()
-    page.locator("#standard-body-2b2656b8-7682-4633-8207-49c5941b5720 label").first.click()
+    #page.locator("#standard-body-2b2656b8-7682-4633-8207-49c5941b5720 label").first.click()
+    print_reference = input("Enter print reference\n")
+    difficulty_level = input("Enter difficulty level 1-5\n")
+    state_difficulty = input("State difficulty level (E,A,D)\n")
+    RBT = input("Enter RBT (Remember, Understand, Apply, Analyze, Create, Evaluate) \n")
+    BKD = input("Enter Blooms Knowledge Dimension (F,C,P,M)\n")
+    WDK = input("Enter Depth on knowledge level (1,2,3,4)\n")
+    stem = input("Please enter question stem\n")
+    ans1 = input("Please enter option a\n")
+    ans2 = input("Please enter option b\n")
+    ans3 = input("Please enter option c\n")
+    ans4 = input("Please enter option d\n")
+    cue1 = input("Please enter cue a\n")
+    cue2 = input("Please enter cue b\n")
+    cue3 = input("Please enter cue c\n")
+    cue4 = input("Please enter cued d\n")
+    correctAns = input("Please enter the correct answer\n")
+    correctAns = correctAns.lower()
     page.locator("#create-question-nav-tab-1 div").nth(1).click()
     page.locator("input[type=\"text\"]").click()
     div_locator = "body > div.me-container.common-bg > div.container > section > div > div > div.tab-holder.create-question-tab-holder > div > div > div.general-header.panel-collapse.collapse.in > div:nth-child(2) > div.question-id > div.question-id-text"
@@ -36,7 +45,17 @@ def createQuestion(page):
     print(f'Question ID: {div_text}')
     page.locator("input[type=\"text\"]").fill(print_reference)
     #difficulty levels
-    page.locator("#difficultyLevels-input").select_option(str(DLdict[difficulty_level]))
+    page.locator('xpath=//*[@id="difficultyLevels-input"]').click()
+    if difficulty_level.lower == "1":
+        page.locator("#difficultyLevels-input").select_option("1")
+    elif difficulty_level.lower == "2":
+        page.locator("#difficultyLevels-input").select_option("5")
+    elif difficulty_level.lower == "3":
+        page.locator("#difficultyLevels-input").select_option("2")
+    elif difficulty_level.lower == "4":
+        page.locator("#difficultyLevels-input").select_option("3")
+    elif difficulty_level.lower == "5":
+        page.locator("#difficultyLevels-input").select_option("4")
     #state difficulty levels
     if state_difficulty.lower() == "e":
         state_difficulty = "E - Easy"
@@ -57,28 +76,39 @@ def createQuestion(page):
     page.get_by_text("Multiple Choice/Multiple").click()
     page.get_by_text("Next").click()
     page.frame_locator("iframe[title=\"Rich Text Editor\\, editor1\"]").get_by_text("Enter question").click()
-    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor1\"]").locator("body").fill("question stem")
+    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor1\"]").locator("body").fill(stem)
     page.frame_locator("iframe[title=\"Rich Text Editor\\, editor2\"]").get_by_text("Enter answer option").click()
-    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor2\"]").locator("body").fill("answer a")
+    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor2\"]").locator("body").fill(ans1)
     page.frame_locator("iframe[title=\"Rich Text Editor\\, editor3\"]").locator("html").click()
-    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor3\"]").locator("body").fill("answer b")
+    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor3\"]").locator("body").fill(ans2)
     page.frame_locator("iframe[title=\"Rich Text Editor\\, editor4\"]").get_by_text("Enter answer option").click()
-    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor4\"]").locator("body").fill("answer c")
+    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor4\"]").locator("body").fill(ans3)
     page.frame_locator("iframe[title=\"Rich Text Editor\\, editor5\"]").get_by_text("Enter answer option").click()
-    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor5\"]").locator("body").fill("answer d")
-    page.get_by_role("radio").first.check()
-    page.get_by_role("radio").nth(1).check()
-    page.get_by_role("radio").nth(2).check()
-    page.locator("div:nth-child(4) > .row-container > .row-selection-container").click()
+    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor5\"]").locator("body").fill(ans4)
+    #page.get_by_role("radio").first.check()
+    #page.get_by_role("radio").nth(1).check()
+    #page.get_by_role("radio").nth(2).check()
+    if correctAns == "a":
+        page.locator('xpath=//*[@id="sortable"]/div[1]/div[2]/div[2]/input').click()
+    elif correctAns == 'b':
+        page.locator('xpath=//*[@id="sortable"]/div[2]/div[2]/div[2]/input').click()
+    elif correctAns == 'c':
+        page.locator('xpath=//*[@id="sortable"]/div[3]/div[2]/div[2]/input').click()
+    elif correctAns == 'd':
+        page.locator('xpath=//*[@id="sortable"]/div[4]/div[2]/div[2]/input').click()
+    else:
+        print("correct answer is not working")
+    #page.locator("div:nth-child(4) > .row-container > .row-selection-container").click()
     page.locator("#tab-holder").get_by_text("Next").click()
+
     page.frame_locator("iframe[title=\"Rich Text Editor\\, editor6\"]").locator("body").click()
-    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor6\"]").locator("body").fill("cue a")
+    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor6\"]").locator("body").fill(cue1)
     page.frame_locator("iframe[title=\"Rich Text Editor\\, editor7\"]").locator("html").click()
-    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor7\"]").locator("body").fill("cue b")
+    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor7\"]").locator("body").fill(cue2)
     page.frame_locator("iframe[title=\"Rich Text Editor\\, editor8\"]").get_by_text("Enter answer cue").click()
-    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor8\"]").locator("body").fill("cue c")
+    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor8\"]").locator("body").fill(cue3)
     page.frame_locator("iframe[title=\"Rich Text Editor\\, editor9\"]").get_by_text("Enter answer cue").click()
-    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor9\"]").locator("body").fill("cue d")
+    page.frame_locator("iframe[title=\"Rich Text Editor\\, editor9\"]").locator("body").fill(cue4)
     page.locator("#tab-holder").get_by_text("Done").click()
     #page.get_by_text("Yes", exact=True).click()
 
