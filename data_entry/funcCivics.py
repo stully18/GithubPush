@@ -1,4 +1,4 @@
-import civics
+
 
 standards = {
     "1.1" : "",
@@ -42,14 +42,7 @@ standards = {
     "4.3" : ""
 }
 
-RBTdic = {
-    "remember" : '2',
-    "understand" : '1',
-    "apply" : '4',
-    "analyze" : '6',
-    "create" : '3',
-    "evaluate" : '5'
-}
+
 BKDdict = {
     "F": '1',
     "C": '4',
@@ -64,3 +57,11 @@ WDKdict = {
     '4': '2'
 }
 
+RBTdict = {
+    "remember": '2',
+    "understand": '1',
+    "apply": '4',
+    "analyze": '6',
+    "create": '3',
+    "evaluate": '5'
+}

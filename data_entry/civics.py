@@ -12,6 +12,7 @@ def login(page):
     page.get_by_role("button", name="LOG IN").click()
 
 def createQuestion(page):
+
     page.get_by_label("Content linkPress enter or").click()
     page.get_by_label("Question Search linkPress").click()
     page.get_by_title("Create Question").locator("span").click()
@@ -45,17 +46,21 @@ def createQuestion(page):
     print(f'Question ID: {div_text}')
     page.locator("input[type=\"text\"]").fill(print_reference)
     #difficulty levels
-    page.locator('xpath=//*[@id="difficultyLevels-input"]').click()
-    if difficulty_level.lower == "1":
+    #page.locator('xpath=//*[@id="difficultyLevels-input"]').click()
+    '''if difficulty_level == "1":
         page.locator("#difficultyLevels-input").select_option("1")
-    elif difficulty_level.lower == "2":
+    elif difficulty_level == "2":
         page.locator("#difficultyLevels-input").select_option("5")
-    elif difficulty_level.lower == "3":
-        page.locator("#difficultyLevels-input").select_option("2")
-    elif difficulty_level.lower == "4":
+    elif difficulty_level == "3":
         page.locator("#difficultyLevels-input").select_option("3")
-    elif difficulty_level.lower == "5":
+    elif difficulty_level == "4":
         page.locator("#difficultyLevels-input").select_option("4")
+    elif difficulty_level == "5":
+        page.locator("#difficultyLevels-input").select_option("4")'''
+
+    page.get_by_label("5").click()
+
+
     #state difficulty levels
     if state_difficulty.lower() == "e":
         state_difficulty = "E - Easy"
@@ -66,9 +71,17 @@ def createQuestion(page):
 
     page.get_by_text(state_difficulty).click()
     #revised blooms taxonomy
-    page.locator("#blooms-input").select_option(RBTdic[RBT])
+    page.locator("#blooms-input").select_option(RBTdict[RBT])
     #blooms knowledge dimension
-    page.locator("#RevisedBlooms-input").select_option(BKDdict[BKD.upper()])
+    if BKD.lower() == 'f':
+        page.locator("#RevisedBlooms-input").select_option("1")
+    elif BKD.lower() == 'c':
+        page.locator("#RevisedBlooms-input").select_option("4")
+    elif BKD.lower() == 'p':
+        page.locator("#RevisedBlooms-input").select_option("3")
+    elif BKD.lower() == 'm':
+        page.locator("#RevisedBlooms-input").select_option("2")
+    #page.locator("#RevisedBlooms-input").select_option(BKDdict[BKD.upper()])
     #Webbs Depth of knowledge
     page.locator("#Wook-input").select_option(WDKdict[str(WDK)])
     page.locator("#create-question-nav-tab-3").click()
