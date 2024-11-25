@@ -1,6 +1,6 @@
 import customtkinter
 from ctypes import windll
-
+from functions import *
 
 windll.shcore.SetProcessDpiAwareness(1)
 
