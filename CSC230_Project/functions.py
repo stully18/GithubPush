@@ -1,6 +1,22 @@
 import pandas as pd
+from customtkinter import filedialog
 
-df = pd.read_csv("CSC230.csv")
+def selectfile():
+    filetypes = (
+        ('CSV files', '*.csv'),
+        ('All files', '*.*')
+    )
+    filename = filedialog.askopenfilename(
+        title='Open a CSV file',
+        initialdir='/',
+        filetypes=filetypes)
+    file = filename
+    df = pd.read_csv(f'{file}')
+    return df
+
+df = selectfile()
+
+
 x_values = df['X'].values
 y_values = df['Y'].values
 probabilities = df['Probability'].values
@@ -8,11 +24,9 @@ probabilities = df['Probability'].values
 marginal_x = df.groupby('X')['Probability'].sum()
 marginal_y = df.groupby('Y')['Probability'].sum()
 
-def getMargX():
-    return marginal_x
 
-def getMargY():
-    return marginal_y
+
+
 
 def find_expectedX():
     eOfX = 0
@@ -58,3 +72,7 @@ def correlation():
     cor = cov/((varX**0.5)*(varY**0.5))
     return round(cor,4)
 cor = correlation()
+
+
+
+
