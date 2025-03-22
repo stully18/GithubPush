@@ -3,11 +3,12 @@ import threading
 
 global threads
 
-threads = 12
+
 start = 1
-end = 2000000
 countNumber = 100000
 total_time = 0
+
+
 
 def calculatePrimeNumbers(start, end):
     primeNumbers = []
@@ -22,12 +23,8 @@ def calculatePrimeNumbers(start, end):
         if prime:
             primeNumbers.append(i)
 
-def countToThisNumber(n):
-    square = []
-    for i in range(1, n):
-        k = i*i
-
-def threadedPrime(end):
+def threadedPrime(end, threads):
+    
     chunkSize = int(end / threads)
 
     threadLst = []
