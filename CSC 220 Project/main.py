@@ -1,6 +1,7 @@
 import timeit
 import customtkinter as tk
 import multiprocessing
+import psutil
 from tkinter import *
 from functions import threadedPrime, calculatePrimeNumbers
 
@@ -12,6 +13,10 @@ def getValues():
     end = int(numberEntry.get())
     return threads, iterations, end
 
+def get_cpu_usage():
+    cpu_percent = psutil.cpu_percent(interval=1, percpu=False)
+    cpuUsageLabel.configure(text=f"CPU Usage: {cpu_percent}%")
+    app.after(1000, get_cpu_usage) 
 
 def calculate():
     resultLabel.configure(text="Calculating...")
@@ -36,6 +41,7 @@ app.columnconfigure(2, weight=1)
 app.columnconfigure(3, weight=1)
 app.columnconfigure(4, weight=1)
 app.columnconfigure(5, weight=1)
+app.columnconfigure(6, weight=1)
 
 
 
@@ -71,24 +77,8 @@ resultLabel = tk.CTkLabel(app, text="Results will be displayed here.")
 resultLabel.configure(font=("Arial", 20))
 resultLabel.grid(row=5, column=0, columnspan=2)
 
+cpuUsageLabel = tk.CTkLabel(app, text="test")
+cpuUsageLabel.configure(font=("Arial", 20))
+cpuUsageLabel.grid(row=6, column=0, columnspan=2)
+
 app.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-
-'''time_threaded = timeit.timeit(lambda: threadedPrime(end), number=iterations)
-print(f"{threads} threads: {round(time_threaded/iterations, 4)} seconds")
-
-time_single_thread = timeit.timeit(lambda: calculatePrimeNumbers(start, end), number=iterations) 
-print(f"Single thread: {round(time_single_thread/iterations, 4)} seconds")'''
-
-
-
