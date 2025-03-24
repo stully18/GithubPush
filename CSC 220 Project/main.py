@@ -1,8 +1,6 @@
 import timeit
 import customtkinter as tk
 import multiprocessing
-import psutil
-from tkinter import *
 from functions import threadedPrime, calculatePrimeNumbers
 
 maxThreads = multiprocessing.cpu_count()
@@ -13,11 +11,6 @@ def getValues():
     end = int(numberEntry.get())
     return threads, iterations, end
 
-def get_cpu_usage():
-    cpu_percent = psutil.cpu_percent(interval=1, percpu=False)
-    cpuUsageLabel.configure(text=f"CPU Usage: {cpu_percent}%")
-    app.after(1000, get_cpu_usage) 
-
 def calculate():
     resultLabel.configure(text="Calculating...")
     app.update()
@@ -27,8 +20,13 @@ def calculate():
     resultConfig(time_singleThread, time_multiThreaded, iterations)
 
 def resultConfig(singleThreadTime, multiThreadTime, iterations):
-    resultLabel.configure(text=f"Single thread: {round(singleThreadTime/iterations, 4)} seconds\nMulti-threaded: {round(multiThreadTime/iterations, 4)} seconds")
-
+    winner = "Single thread" if singleThreadTime < multiThreadTime else "Multi-threaded"
+    difference = singleThreadTime - multiThreadTime if singleThreadTime >= multiThreadTime else multiThreadTime - singleThreadTime
+    resultLabel.configure(text=f"Single thread: {round(singleThreadTime/iterations, 4)} seconds\
+                            \nMulti-threaded: {round(multiThreadTime/iterations, 4)} seconds\
+                            \nWinner: {winner}\
+                            \nDifference: {round(difference/iterations, 4)} seconds\
+                            \nPercentage difference: {round(((abs(singleThreadTime - multiThreadTime))/((singleThreadTime+multiThreadTime)/2))*100)}%")
 
 app = tk.CTk()
 app.geometry("800x600")
@@ -41,9 +39,6 @@ app.columnconfigure(2, weight=1)
 app.columnconfigure(3, weight=1)
 app.columnconfigure(4, weight=1)
 app.columnconfigure(5, weight=1)
-app.columnconfigure(6, weight=1)
-
-
 
 welcomeLabel = tk.CTkLabel(app, text="Welcome to the multi-threaded speed calculator!")
 welcomeLabel.configure(font=("Arial", 24), pady=15)
@@ -56,7 +51,7 @@ labelNumEntry.grid(row=1, column=0)
 numberEntry = tk.CTkEntry(app, font=("Arial", 20), width=200)
 numberEntry.grid(row=1, column=1)
 
-labelThreadEntry = tk.CTkLabel(app, text=f"Enter number of threads (max ={maxThreads}):")
+labelThreadEntry = tk.CTkLabel(app, text=f"Enter number of threads (max ={maxThreads-1}):")
 labelThreadEntry.configure(font=("Arial", 20))
 labelThreadEntry.grid(row=2, column=0, pady=5)
 
@@ -77,8 +72,5 @@ resultLabel = tk.CTkLabel(app, text="Results will be displayed here.")
 resultLabel.configure(font=("Arial", 20))
 resultLabel.grid(row=5, column=0, columnspan=2)
 
-cpuUsageLabel = tk.CTkLabel(app, text="test")
-cpuUsageLabel.configure(font=("Arial", 20))
-cpuUsageLabel.grid(row=6, column=0, columnspan=2)
 
 app.mainloop()
