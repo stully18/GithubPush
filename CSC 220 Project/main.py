@@ -51,7 +51,7 @@ labelNumEntry.grid(row=1, column=0)
 numberEntry = tk.CTkEntry(app, font=("Arial", 20), width=200)
 numberEntry.grid(row=1, column=1)
 
-labelThreadEntry = tk.CTkLabel(app, text=f"Enter number of threads (max ={maxThreads-1}):")
+labelThreadEntry = tk.CTkLabel(app, text=f"Enter number of threads (max ={maxThreads}):")
 labelThreadEntry.configure(font=("Arial", 20))
 labelThreadEntry.grid(row=2, column=0, pady=5)
 
