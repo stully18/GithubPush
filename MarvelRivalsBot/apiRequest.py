@@ -27,7 +27,7 @@ def update_player_data(uid, api_key):
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()  # Will raise an exception for 4XX/5XX status
-        print("Update successful:", response.json())
+        print("Update :", response.json())
         return True
     except requests.exceptions.RequestException as e:
         print(f"Error updating player data: {str(e)}")
@@ -44,9 +44,10 @@ def get_player_data(player_name, api_key):
     if not update_player_data(uid, api_key):
         print("Warning: Player data update failed, trying to get cached data")
     
-    time.sleep(1)  # Wait for update to process
+    time.sleep(1)
     
-    url = f"https://marvelrivalsapi.com/api/v1/player/{uid}"
+    url = f"https://marvelrivalsapi.com/api/v1/player/{uid}?season=2"
+
     headers = {"x-api-key": api_key}
     try:
         response = requests.get(url, headers=headers)
@@ -71,5 +72,3 @@ if player_data:
     print(json.dumps(player_data, indent=4))
 else:
     print("Failed to retrieve player data")
-
-uid = get_UID(player_name, api_key)
