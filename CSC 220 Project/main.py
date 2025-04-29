@@ -73,4 +73,5 @@ resultLabel.configure(font=("Arial", 20))
 resultLabel.grid(row=5, column=0, columnspan=2)
 
 
-app.mainloop()
+if __name__ == "__main__":
+    app.mainloop()

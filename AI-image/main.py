@@ -5,7 +5,7 @@ import ctypes
 from PIL import ImageTk, Image
 from api_request import request
 ctypes.windll.shcore.SetProcessDpiAwareness(2)
-customtkinter.set_appearance_mode("System")
+customtkinter.set_appearance_mode("Sysin
 customtkinter.set_default_color_theme("dark-blue")
 def get_response():
     label.configure(state="normal",font=("Arial-BoldMT", 20))
