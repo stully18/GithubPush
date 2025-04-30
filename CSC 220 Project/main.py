@@ -25,8 +25,7 @@ def resultConfig(singleThreadTime, multiThreadTime, iterations):
     resultLabel.configure(text=f"Single thread: {round(singleThreadTime/iterations, 4)} seconds\
                             \nMulti-threaded: {round(multiThreadTime/iterations, 4)} seconds\
                             \nWinner: {winner}\
-                            \nDifference: {round(difference/iterations, 4)} seconds\
-                            \nPercentage difference: {round(((abs(singleThreadTime - multiThreadTime))/((singleThreadTime+multiThreadTime)/2))*100)}%")
+                            \nDifference: {round(difference/iterations, 4)} seconds")
 
 app = tk.CTk()
 app.geometry("800x600")
@@ -73,4 +72,5 @@ resultLabel.configure(font=("Arial", 20))
 resultLabel.grid(row=5, column=0, columnspan=2)
 
 
-app.mainloop()
+if __name__ == "__main__":
+    app.mainloop()
