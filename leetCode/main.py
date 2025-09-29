@@ -1,5 +1,6 @@
-import pandas as pd
+Parsecs = int(input("How many Parsecs\n"))
+OneParsec = 3.26
+lightyear = 9.46*(10**15)
 
-def duplicate_emails(person: pd.DataFrame) -> pd.DataFrame:
-    duplicates = person[person.duplicated()]
-    print(duplicates)
+meters = Parsecs * (OneParsec*lightyear)
+print(meters)
